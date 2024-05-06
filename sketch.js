@@ -29,9 +29,6 @@ let current;
 let chosenAlphabet = [];
 let countAlphabet = 0;
 
-
-
-
 function Spot(i,j) {
     this.i = i;
     this.j = j;
@@ -121,15 +118,14 @@ function setup() {
 
     // push the start in the openSet for the beginning
     openSet.push(start);
-
 }
 
 function draw() {
+    loop();
 
     // MAIN ALGORITHM STARTS HERE
     if (openSet.length > 0){
         // the algo keep going
-
         // step 01:
         // go to the open set and find spot that has the lowest f score
         let winner = 0;
@@ -142,10 +138,8 @@ function draw() {
         current = openSet[winner];
 
         if (current === end){
-           
-            // openSet = [];
-            // closedSet = [];
-            // noLoop();
+            end = grid[cols-2][rows-2];
+            noLoop()
             console.log("DONE", end);
         }
 
@@ -193,7 +187,6 @@ function draw() {
         }
     }
 
-    
 
     // set color for open set
     for (let i = 0 ; i<openSet.length; i++){
@@ -220,10 +213,10 @@ function draw() {
     }
 }
 
-function mousePressed() {
-    end = grid[rows-2][cols-2];
+function mousePressed(){
     openSet = [];
-    openSet.push(start);
     closedSet = [];
+    openSet.push(start);
     redraw();
-  }
+
+}
