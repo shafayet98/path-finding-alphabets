@@ -26,6 +26,12 @@ let w, h;
 let path = [];
 let current;
 
+let chosenAlphabet = [];
+let countAlphabet = 0;
+
+
+
+
 function Spot(i,j) {
     this.i = i;
     this.j = j;
@@ -50,10 +56,12 @@ function Spot(i,j) {
     }
 
     this.showAlphabet = function(grid){
-        // print(this.wall);
         if(this.wall == false){
+            textSize(20);
             stroke(0);
-            text('A', this.i*w + cols + 5, this.j*h + rows + 5);
+            fill(0);
+            strokeWeight(2);
+            text('A', (this.i)*w +cols, (this.j)*h +rows + 20);
         }
     }
 
@@ -72,8 +80,6 @@ function Spot(i,j) {
         if (j > 0){
             this.neighbors.push(grid[i][j-1]); 
         }
-        
-        
     }
 
 }
@@ -110,6 +116,7 @@ function setup() {
     end = grid[cols-1][rows-1];
     start.wall = false;
     end.wall = false;
+    
     // end = grid[20][3];
 
     // push the start in the openSet for the beginning
@@ -118,6 +125,9 @@ function setup() {
 }
 
 function draw() {
+
+    
+    
 
     // MAIN ALGORITHM STARTS HERE
     if (openSet.length > 0){
@@ -185,18 +195,20 @@ function draw() {
     for (let i = 0 ; i<cols; i++){
         for(let j = 0 ; j < rows; j++){
             grid[i][j].show(color(255));
-            grid[i][j].showAlphabet(grid);
+            end.showAlphabet(end);
         }
     }
 
+    
+
     // set color for open set
     for (let i = 0 ; i<openSet.length; i++){
-        openSet[i].show(color(0,255,0));
+        openSet[i].show(color(0,255,0,100));
     }
 
     // // set color for closed set
     for (let i = 0 ; i<closedSet.length; i++){
-        closedSet[i].show(color(255,0,0));
+        closedSet[i].show(color(255,0,0,100));
     }
 
     
@@ -210,9 +222,6 @@ function draw() {
     }
     // show the path - at the end
     for (let i = 0 ; i<path.length; i++){
-        path[i].show(color(0,0,255));
+        path[i].show(color(0,0,255,100));
     }
-
-
-    
 }
