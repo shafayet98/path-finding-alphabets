@@ -12,8 +12,8 @@ function heuristic(a,b){
     return d;
 }
 
-let cols = 5;
-let rows = 5;
+let cols = 15;
+let rows = 15;
 let alphabets = ['A', 'B', 'C', 'D', 'E', 'F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
 let grid = new Array(cols);
@@ -42,9 +42,9 @@ function Spot(i,j) {
     this.previous = undefined;
     this.wall = false;
 
-    if (random(1) < 0.3){
-        this.wall = true;
-    }
+    // if (random(1) < 0.1){
+    //     this.wall = true;
+    // }
 
     this.show = function(clr){
         fill(clr);
@@ -61,7 +61,7 @@ function Spot(i,j) {
             stroke(0);
             fill(0);
             strokeWeight(2);
-            text('A', (this.i)*w +cols, (this.j)*h +rows + 20);
+            text('T', (this.i)*w +cols, (this.j)*h +rows + 20);
         }
     }
 
@@ -126,9 +126,6 @@ function setup() {
 
 function draw() {
 
-    
-    
-
     // MAIN ALGORITHM STARTS HERE
     if (openSet.length > 0){
         // the algo keep going
@@ -145,9 +142,11 @@ function draw() {
         current = openSet[winner];
 
         if (current === end){
-
-            noLoop();
-            console.log("DONE");
+           
+            // openSet = [];
+            // closedSet = [];
+            // noLoop();
+            console.log("DONE", end);
         }
 
         removeFromArray(openSet, current);
@@ -176,18 +175,13 @@ function draw() {
                 eachNeighbor.h = heuristic(eachNeighbor, end);
                 eachNeighbor.f = eachNeighbor.g + eachNeighbor.h;
                 eachNeighbor.previous = current;
-
-
             }
-
         }
-
-        
-
-
     }else{
         // no solution found
     }
+    // MAIN ALGORITHM ENDS HERE
+
 
     background(0);
 
@@ -225,3 +219,11 @@ function draw() {
         path[i].show(color(0,0,255,100));
     }
 }
+
+function mousePressed() {
+    end = grid[rows-2][cols-2];
+    openSet = [];
+    openSet.push(start);
+    closedSet = [];
+    redraw();
+  }
